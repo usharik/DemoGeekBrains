@@ -1,4 +1,4 @@
-package com.example.demo.rest;
+package com.example.demo.controller;
 
 import com.example.demo.persistance.Person;
 import com.example.demo.persistance.PersonRepository;
@@ -34,11 +34,6 @@ public class PersonController {
         return personRepository.findById(id)
                 .map(person -> new ResponseEntity<>(person, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @RequestMapping(value = "/{name}/name", method = RequestMethod.GET)
-    public List<Person> getPersonByName(@PathVariable("id") String name) {
-        return personRepository.findByFullNameLike(name);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)

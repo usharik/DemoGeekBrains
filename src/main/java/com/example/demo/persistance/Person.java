@@ -25,6 +25,14 @@ public class Person {
     @Column(name = "Date_Of_Birth", nullable = false)
     private Date dateOfBirth;
 
+    public Person() {
+    }
+
+    public Person(String fullName, Date dateOfBirth) {
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public Long getId() {
         return id;
     }

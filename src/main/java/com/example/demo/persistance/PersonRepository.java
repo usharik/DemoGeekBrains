@@ -5,12 +5,15 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
-    List<Person> findByFullNameLike(String name);
+    Optional<Person> findByFullName(String name);
 
     List<Person> findByDateOfBirthGreaterThan(LocalDateTime date);
+
+    Boolean existsByFullName(String fullName);
 
 }
