@@ -3,7 +3,8 @@ package com.example.demo.service;
 import com.example.demo.persistance.Question;
 import com.example.demo.persistance.QuestionRepository;
 import com.example.demo.representation.QuestionForList;
-import com.example.demo.representation.SubmitedQuestion;
+import com.example.demo.representation.SubmittedQuestion;
+import com.example.demo.service.security.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +30,10 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void saveSubmittedQuestion(SubmitedQuestion submitedQuestion) {
+    public void saveSubmittedQuestion(SubmittedQuestion submittedQuestion) {
         Question question = new Question();
-        question.setHeader(submitedQuestion.getHeader());
-        question.setText(submitedQuestion.getText());
+        question.setHeader(submittedQuestion.getHeader());
+        question.setText(submittedQuestion.getText());
         question.setCreationDate(Date.valueOf(LocalDate.now()));
         question.setAuthor(authenticationService.getCurrentUser());
         questionRepository.save(question);

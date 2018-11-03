@@ -10,8 +10,8 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "PERSON")
-public class Person {
+@Table(name = "USER")
+public class User {
 
     @Id
     @GeneratedValue
@@ -25,11 +25,19 @@ public class Person {
     @Column(name = "Date_Of_Birth", nullable = false)
     private Date dateOfBirth;
 
-    public Person() {
+    @Column(name = "Username", length = 64, nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "Password", length = 64, nullable = false)
+    private String password;
+
+    public User() {
     }
 
-    public Person(String fullName, Date dateOfBirth) {
+    public User(String fullName, String username, String password, Date dateOfBirth) {
         this.fullName = fullName;
+        this.username = username;
+        this.password = password;
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -57,4 +65,19 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

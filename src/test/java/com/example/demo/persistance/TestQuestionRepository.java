@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SpringBootTest
 public class TestQuestionRepository {
 
@@ -25,14 +27,15 @@ public class TestQuestionRepository {
     private AnswerRepository answerRepository;
 
     @Autowired
-    private PersonRepository personRepository;
+    private UserRepository userRepository;
 
     @Test
     public void test() {
-        Person authorOfQuestion = personRepository.save(new Person("Author Of Question", dateOf(1985, 2, 23)));
-        Person authorOfAnswer = personRepository.save(new Person("Author Of Answer", dateOf(1983, 9, 12)));
+        User authorOfQuestion = userRepository.save(new User("Author Of Question", "user1", "password1", dateOf(1985, 2, 23)));
+        User authorOfAnswer = userRepository.save(new User("Author Of Answer", "user2", "password2", dateOf(1983, 9, 12)));
 
         Question expectedQuestion = new Question();
+        expectedQuestion.setHeader("Question header");
         expectedQuestion.setText("Text of test question. Asking about something?");
         expectedQuestion.setCreationDate(now());
         expectedQuestion.setAuthor(authorOfQuestion);
@@ -44,8 +47,6 @@ public class TestQuestionRepository {
                 new Answer("Third answer", now(), authorOfAnswer, expectedQuestion));
 
         answerRepository.saveAll(answers);
-
-        assertNotNull(expectedQuestion);
 
         Question question = questionRepository.findQuestionById(expectedQuestion.getId())
                 .orElseThrow(() -> new AssertionError("Can't get created question."));

@@ -1,6 +1,6 @@
 package com.example.demo.representation;
 
-public class SubmitedQuestion {
+public class SubmittedQuestion {
 
     private String header;
 

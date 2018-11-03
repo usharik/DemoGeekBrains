@@ -36,7 +36,7 @@ public class Question {
     private Date updateDate;
 
     @OneToOne
-    private Person author;
+    private User author;
 
     @OneToMany(mappedBy = "question")
     private List<Answer> answers;
@@ -45,7 +45,7 @@ public class Question {
 
     }
 
-    public Question(String header, String text, Date creationDate, Person author) {
+    public Question(String header, String text, Date creationDate, User author) {
         this.header = header;
         this.text = text;
         this.creationDate = creationDate;
@@ -92,11 +92,11 @@ public class Question {
         this.updateDate = updateDate;
     }
 
-    public Person getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(Person author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

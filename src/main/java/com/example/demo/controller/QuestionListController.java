@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.representation.SubmitedQuestion;
+import com.example.demo.representation.SubmittedQuestion;
+import com.example.demo.service.security.AuthenticationService;
 import com.example.demo.service.QuestionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,27 +18,31 @@ public class QuestionListController {
     private static final Logger LOGGER = LoggerFactory.getLogger(QuestionListController.class);
 
     private final QuestionService questionService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public QuestionListController(QuestionService questionService) {
+    public QuestionListController(QuestionService questionService, AuthenticationService authenticationService) {
         this.questionService = questionService;
+        this.authenticationService = authenticationService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String questionList(Model model) {
         model.addAttribute("questions", questionService.findAllQuestionsForList());
+        model.addAttribute("user", authenticationService.getCurrentUser());
         return "index";
     }
 
     @RequestMapping(value = "/newquestion", method = RequestMethod.GET)
     public String newQuestionForm(Model model) {
-        model.addAttribute("submitedQuestion", new SubmitedQuestion());
+        model.addAttribute("submittedQuestion", new SubmittedQuestion());
+        model.addAttribute("user", authenticationService.getCurrentUser());
         return "newquestion";
     }
 
     @RequestMapping(value = "/newquestion", method = RequestMethod.POST)
-    public String submitNewQuestion(@ModelAttribute SubmitedQuestion submitedQuestion) {
-        questionService.saveSubmittedQuestion(submitedQuestion);
+    public String submitNewQuestion(@ModelAttribute SubmittedQuestion submittedQuestion) {
+        questionService.saveSubmittedQuestion(submittedQuestion);
         return "redirect:/";
     }
 }

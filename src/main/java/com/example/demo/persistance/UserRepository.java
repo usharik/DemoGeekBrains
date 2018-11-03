@@ -8,11 +8,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PersonRepository extends CrudRepository<Person, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 
-    Optional<Person> findByFullName(String name);
+    Optional<User> findByFullName(String name);
 
-    List<Person> findByDateOfBirthGreaterThan(LocalDateTime date);
+    Optional<User> findByUsername(String name);
+
+    Boolean existsByUsername(String username);
+
+    List<User> findByDateOfBirthGreaterThan(LocalDateTime date);
 
     Boolean existsByFullName(String fullName);
 

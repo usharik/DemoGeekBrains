@@ -35,13 +35,13 @@ public class Answer {
     private Date updateDate;
 
     @OneToOne
-    private Person author;
+    private User author;
 
     public Answer() {
 
     }
 
-    public Answer(String text, Date creationDate, Person author, Question question) {
+    public Answer(String text, Date creationDate, User author, Question question) {
         this.text = text;
         this.creationDate = creationDate;
         this.author = author;
@@ -88,11 +88,11 @@ public class Answer {
         this.question = question;
     }
 
-    public Person getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(Person author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 }
