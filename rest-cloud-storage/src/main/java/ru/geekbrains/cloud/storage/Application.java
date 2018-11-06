@@ -3,8 +3,8 @@ package ru.geekbrains.cloud.storage;
 import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.geekbrains.cloud.storage.persistance.CrudRepository;
-import ru.geekbrains.cloud.storage.persistance.RepositoryFactory;
+import ru.geekbrains.cloud.storage.persistance.api.CrudRepository;
+import ru.geekbrains.cloud.storage.persistance.api.RepositoryFactory;
 import ru.geekbrains.cloud.storage.persistance.RepositoryFactoryProvider;
 import ru.geekbrains.cloud.storage.persistance.entity.StoredFile;
 

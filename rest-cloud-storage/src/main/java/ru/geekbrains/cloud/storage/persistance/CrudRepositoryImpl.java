@@ -2,6 +2,7 @@ package ru.geekbrains.cloud.storage.persistance;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.geekbrains.cloud.storage.persistance.api.CrudRepository;
 import ru.geekbrains.cloud.storage.persistance.entity.OrmEntity;
 
 import javax.persistence.EntityManager;
@@ -15,8 +16,8 @@ class CrudRepositoryImpl<K, E extends OrmEntity<K>> implements CrudRepository<K,
 
     private static final Logger logger = LoggerFactory.getLogger(CrudRepositoryImpl.class);
 
-    private final EntityManager entityManager;
-    private final Class<E> clazz;
+    protected final EntityManager entityManager;
+    protected final Class<E> clazz;
 
     CrudRepositoryImpl(EntityManager entityManager, Class<E> clazz) {
         this.entityManager = entityManager;
@@ -47,14 +48,14 @@ class CrudRepositoryImpl<K, E extends OrmEntity<K>> implements CrudRepository<K,
         return runInTransaction(() -> entityManager.createQuery(query).getResultList());
     }
 
-    private void runInTransaction(Runnable action) {
+    protected void runInTransaction(Runnable action) {
         runInTransaction(() -> {
             action.run();
             return null;
         });
     }
 
-    private <Q> Q runInTransaction(Supplier<Q> supplier) {
+    protected  <Q> Q runInTransaction(Supplier<Q> supplier) {
         EntityTransaction transaction = null;
 
         try {

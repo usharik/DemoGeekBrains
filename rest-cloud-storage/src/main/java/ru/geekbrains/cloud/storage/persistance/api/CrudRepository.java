@@ -1,4 +1,4 @@
-package ru.geekbrains.cloud.storage.persistance;
+package ru.geekbrains.cloud.storage.persistance.api;
 
 import ru.geekbrains.cloud.storage.persistance.entity.OrmEntity;
 

@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import ru.geekbrains.cloud.storage.persistance.api.CrudRepository;
 import ru.geekbrains.cloud.storage.persistance.entity.StoredFile;
 
 import javax.persistence.EntityManager;

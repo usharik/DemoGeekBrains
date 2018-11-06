@@ -1,6 +1,7 @@
 package ru.geekbrains.cloud.storage.persistance;
 
-import ru.geekbrains.cloud.storage.persistance.entity.StoredFile;
+import ru.geekbrains.cloud.storage.persistance.api.RepositoryFactory;
+import ru.geekbrains.cloud.storage.persistance.api.StoredFileRepository;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,11 +13,11 @@ class RepositoryFactoryImpl implements RepositoryFactory {
     private final EntityManagerFactory entityManagerFactory = Persistence
             .createEntityManagerFactory("RestStorageClient");
 
-    private CrudRepository<Long, StoredFile> storedFileRepositoryInstance;
+    private StoredFileRepository storedFileRepositoryInstance;
 
-    public CrudRepository<Long, StoredFile> getStoredFileRepository() {
+    public StoredFileRepository getStoredFileRepository() {
         if (storedFileRepositoryInstance == null) {
-            storedFileRepositoryInstance = new StoredFileRepository(entityManagerFactory.createEntityManager());
+            storedFileRepositoryInstance = new StoredFileRepositoryImpl(entityManagerFactory.createEntityManager());
         }
         return storedFileRepositoryInstance;
     }
