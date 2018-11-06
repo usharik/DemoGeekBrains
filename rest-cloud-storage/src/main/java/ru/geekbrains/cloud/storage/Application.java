@@ -1,5 +1,6 @@
 package ru.geekbrains.cloud.storage;
 
+import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.geekbrains.cloud.storage.persistance.CrudRepository;
@@ -17,9 +18,12 @@ public class Application {
 
     private Closeable closeable;
 
-    public Application(RepositoryFactory repositoryFactory) {
+    private Server jettyServer;
+
+    public Application(RepositoryFactory repositoryFactory, JettyServerFactory jettyServerFactory) {
         this.storedFileRepository = repositoryFactory.getCrudRepository(StoredFile.class);
         this.closeable = repositoryFactory.getCloseable();
+        this.jettyServer = jettyServerFactory.getJettyServer();
     }
 
     public void execute() throws Exception {
@@ -35,13 +39,19 @@ public class Application {
             List<StoredFile> all = storedFileRepository.findAll();
 
             System.out.println("!!! ----------------" + all);
+
+            jettyServer.start();
+            jettyServer.join();
+        } catch (Exception ex) {
+            logger.error("Exception", ex);
         } finally {
             closeable.close();
+            jettyServer.destroy();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        Application application = new Application(new RepositoryFactory());
+        Application application = new Application(new RepositoryFactory(), new JettyServerFactory());
         application.execute();
     }
 }
