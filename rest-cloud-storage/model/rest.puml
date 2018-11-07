@@ -1,0 +1,37 @@
+@startuml
+
++class persistance.RepositoryFactoryProvider {
+    + static RepositoryFactory provide()
+}
+
++interface persistance.api.RepositoryFactory {
+    +StoredFileRepository getStoredFileRepository();
+    +Closeable getCloseable();
+}
+
++interface persistance.api.StoredFileRepository {
+    +List<StoredFile> getFileList();
+    +StoredFile getByName(String fileName);
+}
+
+note top of rest.Controller
+REST controller
+end note
++class rest.Controller {
+
+    ~RepositoryFactory repositoryFactory
+    ~StoredFileRepository storedFileRepository
+
+    +List<StoredFile> listAllFiles()
+    +Response createFiles(@PathParam("fileName") String fileName, InputStream data)
+    +Response getFile(@PathParam("fileName") String fileName)
+    +Response deleteFile(@PathParam("fileName") String fileName)
+}
+
+rest.Controller ..> persistance.RepositoryFactoryProvider : use
+rest.Controller ..> persistance.api.RepositoryFactory : use
+rest.Controller ..> persistance.api.StoredFileRepository : use
+persistance.RepositoryFactoryProvider .> persistance.api.RepositoryFactory : create
+persistance.api.RepositoryFactory .> persistance.api.StoredFileRepository : create
+
+@enduml

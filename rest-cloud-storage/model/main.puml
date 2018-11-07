@@ -1,0 +1,62 @@
+@startuml
+
++class Application {
+
+    -static final Logger logger
+    -Closeable closeable;
+    -Server jettyServer;
+
+    +void execute()
+    +static void main(String[] args)
+}
+
+Application ..> JettyServerFactory : use
+Application ..> org.eclipse.jetty.server.Server : use
+
++class JettyServerFactory {
+    +Server getJettyServer()
+}
+
+note top of org.eclipse.jetty.server.Server
+JettyServer also serve static content
+from //**./resources/public**// folder
+end note
+
++class org.eclipse.jetty.server.Server {
+    +start()
+    +join()
+    +close()
+}
+
+JettyServerFactory ..> org.eclipse.jetty.server.Server : create
+
+note top of rest.Controller
+REST controller
+end note
+
++class rest.Controller {
+
+    ~RepositoryFactory repositoryFactory
+    ~StoredFileRepository storedFileRepository
+
+    +List<StoredFile> listAllFiles()
+    +Response createFiles(@PathParam("fileName") String fileName, InputStream data)
+    +Response getFile(@PathParam("fileName") String fileName)
+    +Response deleteFile(@PathParam("fileName") String fileName)
+}
+
+org.eclipse.jetty.server.Server ..> rest.Controller : use
+
++interface persistance.api.RepositoryFactory {
+    +StoredFileRepository getStoredFileRepository();
+    +Closeable getCloseable();
+}
+
++interface java.lang.Closeable {
+}
+
+Application ..> java.lang.Closeable : use
+
+persistance.api.RepositoryFactory ..> java.lang.Closeable : create
+
+@enduml
