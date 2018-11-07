@@ -21,14 +21,16 @@
 <body>
     <div>
         <input data-my-Directive type="file" name="file">
-
-        <p>
-            post request with this data:
-        </p>
-
-        <pre ng-repeat="(key, value) in fileLog">
-            {{key}} {{ value }}
-        </pre>
+    </div>
+    <div ng-controller="FileList">
+        <table class="table">
+            <tr>
+                <th>File name</th>
+            </tr>
+            <tr ng-repeat="file in files">
+                <td><a href="{{file.fileUrl}}">{{file.fileName}}</a></td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

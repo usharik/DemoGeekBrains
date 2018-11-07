@@ -7,20 +7,10 @@ app.directive('myDirective', function(httpPostFactory) {
       element.bind('change', function() {
         var formData = new FormData();
         formData.append('file', element[0].files[0]);
-
-        // optional front-end logging
         var fileObject = element[0].files[0];
-        scope.fileLog = {
-          'lastModified': fileObject.lastModified,
-          'lastModifiedDate': fileObject.lastModifiedDate,
-          'name': fileObject.name,
-          'size': fileObject.size,
-          'type': fileObject.type
-        };
-        scope.$apply();
-
         httpPostFactory('rest/v1/file/path/' + fileObject.name, formData, function (callback) {
             console.log(callback);
+            scope.$root.$broadcast("newFile", "");
         });
       });
 
@@ -37,8 +27,28 @@ app.factory('httpPostFactory', function($http) {
       headers: {
         'Content-Type': 'application/octet-stream'
       }
-    }).success(function(response) {
+    }).then(function(response) {
       callback(response);
     });
   };
+});
+
+app.controller('FileList', function ($scope, $rootScope, $http) {
+
+    function loadFiles() {
+        $http
+            .get('/rest/v1/file/all')
+            .then(function successCallback(response) {
+                $scope.files = response.data;
+                $scope.files.forEach(function(file) {
+                    file.fileUrl = "/rest/v1/file/path/" + encodeURI(file.fileName);
+                });
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+    }
+
+    loadFiles();
+
+    $rootScope.$on("newFile", loadFiles);
 });
