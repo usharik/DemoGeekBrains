@@ -13,7 +13,6 @@ app.directive('myDirective', function(httpPostFactory) {
             scope.$root.$broadcast("newFile", "");
         });
       });
-
     }
   };
 });

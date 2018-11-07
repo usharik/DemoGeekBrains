@@ -22,7 +22,7 @@ class StoredFileRepositoryImpl extends CrudRepositoryImpl<Long, StoredFile>
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<StoredFile> query = criteriaBuilder.createQuery(clazz);
         Root<StoredFile> root = query.from(clazz);
-        query.multiselect(root.get("id"), root.get("fileName"));
+        query.multiselect(root.get("id"), root.get("fileName"), root.get("createDate"), root.get("updateDate"));
 
         return runInTransaction(() -> entityManager.createQuery(query)
                 .getResultList());

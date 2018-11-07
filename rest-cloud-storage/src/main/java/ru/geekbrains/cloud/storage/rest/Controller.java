@@ -17,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Path("/v1/file/")
@@ -37,9 +39,16 @@ public class Controller {
     @Path("/path/{fileName}")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response createFiles(@PathParam("fileName") String fileName, InputStream data) throws IOException {
-        StoredFile storedFile = new StoredFile();
-        storedFile.setFileName(fileName);
-        storedFile.setFileData(IOUtils.toByteArray(data));
+        StoredFile storedFile = storedFileRepository.getByName(fileName);
+        if (storedFile == null) {
+            storedFile = new StoredFile();
+            storedFile.setFileName(fileName);
+            storedFile.setFileData(IOUtils.toByteArray(data));
+            storedFile.setCreateDate(Date.from(Instant.now()));
+        } else {
+            storedFile.setFileData(IOUtils.toByteArray(data));
+            storedFile.setUpdateDate(Date.from(Instant.now()));
+        }
         storedFileRepository.save(storedFile);
         return Response.accepted().build();
     }

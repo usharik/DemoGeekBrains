@@ -26,9 +26,13 @@
         <table class="table">
             <tr>
                 <th>File name</th>
+                <th>Create date</th>
+                <th>Update date</th>
             </tr>
             <tr ng-repeat="file in files">
                 <td><a href="{{file.fileUrl}}">{{file.fileName}}</a></td>
+                <td>{{file.createDate}}</td>
+                <td>{{file.updateDate}}</td>
             </tr>
         </table>
     </div>

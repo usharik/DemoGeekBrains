@@ -1,6 +1,7 @@
 package ru.geekbrains.cloud.storage.persistance.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = StoredFile.TABLE_NAME)
@@ -14,6 +15,12 @@ public class StoredFile implements OrmEntity<Long> {
 
     @Column(name = "file_name", unique = true, nullable = false)
     private String fileName;
+
+    @Column(name = "create_date", nullable = false)
+    private Date createDate;
+
+    @Column(name = "update_date")
+    private Date updateDate;
 
     @Column( name = "file_data" )
     @Lob
@@ -33,9 +40,11 @@ public class StoredFile implements OrmEntity<Long> {
 
     }
 
-    public StoredFile(Long id, String fileName) {
+    public StoredFile(Long id, String fileName, Date createDate, Date updateDate) {
         this.id = id;
         this.fileName = fileName;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
     }
 
     public String getFileName() {
@@ -44,6 +53,24 @@ public class StoredFile implements OrmEntity<Long> {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public StoredFile setCreateDate(Date createDate) {
+        this.createDate = createDate;
+        return this;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public StoredFile setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+        return this;
     }
 
     public byte[] getFileData() {
