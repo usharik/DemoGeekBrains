@@ -10,34 +10,26 @@ import java.util.Random;
  */
 public class RandomIterableAdapter implements Iterable<Integer> {
 
-    private RandomIterator randomIterator;
+    private Random random;
 
     public RandomIterableAdapter(Random random) {
-        this.randomIterator = new RandomIterator(random);
+        this.random = random;
     }
 
+    // Here is factory method pattern
     @Override
     public Iterator<Integer> iterator() {
-        return randomIterator;
+        return new Iterator<Integer>() {
+
+            @Override
+            public boolean hasNext() {
+                return true;
+            }
+
+            @Override
+            public Integer next() {
+                return random.nextInt();
+            }
+        };
     }
-
-    private static class RandomIterator implements Iterator<Integer> {
-
-        private final Random random;
-
-        public RandomIterator(Random random) {
-            this.random = random;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return true;
-        }
-
-        @Override
-        public Integer next() {
-            return random.nextInt();
-        }
-    }
-
 }
