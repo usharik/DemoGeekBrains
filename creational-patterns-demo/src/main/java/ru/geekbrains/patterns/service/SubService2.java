@@ -1,4 +1,4 @@
 package ru.geekbrains.patterns.service;
 
-class SubService2 {
+public class SubService2 {
 }

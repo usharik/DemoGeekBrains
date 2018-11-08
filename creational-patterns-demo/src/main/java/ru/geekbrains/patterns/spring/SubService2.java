@@ -1,4 +1,4 @@
 package ru.geekbrains.patterns.spring;
 
-class SubService2 {
+public interface SubService2 {
 }

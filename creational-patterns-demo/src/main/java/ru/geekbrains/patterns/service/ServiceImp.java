@@ -16,3 +16,19 @@ class ServiceImp implements Service {
         System.out.println("Performing the service action.");
     }
 }
+
+/*
+
+zsdsdfgsdfgsdfgdfg <b>asdgfsdfgs<i>adsfasdfafsd</i>dfgsdfg</b>
+
+HTMLBuilder()
+    .addText("asdfasdfadfsadf")
+    .addHTMLTag("b")
+        .addText("sdasdasdasd")
+        .addHTMLTag("i")
+            .addText("sdfasdfasdf")
+        .closeTag()
+    .closeTag()
+.build();
+
+ */

@@ -47,7 +47,7 @@ public class Email {
 
     public static class EmailBuilder {
 
-        Email email;
+        private Email email;
 
         private EmailBuilder() {
             this.email = new Email();
