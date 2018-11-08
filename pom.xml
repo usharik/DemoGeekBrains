@@ -10,7 +10,8 @@
         <module>creational-patterns-demo</module>
 		<module>question-and-answer-spring-web-app</module>
         <module>rest-cloud-storage</module>
-	</modules>
+        <module>structure-patterns-demo</module>
+    </modules>
     <packaging>pom</packaging>
 
 	<name>gb-study-examples</name>
