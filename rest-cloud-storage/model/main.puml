@@ -10,7 +10,6 @@
     +static void main(String[] args)
 }
 
-Application ..> JettyServerFactory : use
 Application ..> org.eclipse.jetty.server.Server : use
 
 +class JettyServerFactory {
