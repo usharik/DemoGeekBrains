@@ -1,4 +1,6 @@
-package ru.geekbrains.proxy;
+package ru.geekbrains.proxy.dynamic;
+
+import ru.geekbrains.proxy.Repository;
 
 class RepositoryImpl implements Repository {
 

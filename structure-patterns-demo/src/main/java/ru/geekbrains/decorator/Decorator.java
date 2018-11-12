@@ -9,7 +9,5 @@ public abstract class Decorator implements Operation {
     }
 
     @Override
-    public void perform() {
-        decorated.perform();
-    }
+    public abstract void perform();
 }
